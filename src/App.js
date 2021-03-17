@@ -1,18 +1,30 @@
 import './App.css';
+import {useState,useEffect} from 'react';
+
+const URL ='http://localhost/ostoslista/'
 
 function App() {
+  const [items,setItems] = useState([]);
+
+  useEffect(() => {
+    fetch(URL + 'index.php')
+    .then(response => response.json())
+    .then(
+      (response) => {
+        setItems(response);
+      }, (error) => {
+        alert(error);
+      }
+    )
+    }, [])
+
   return (
     <div className="container">
-      <h1>Shopping list</h1>
-      <form>
-        <label>New item</label>
-        <input type="text"></input>
-        <input type="text"></input>
-        <button>Add</button>
-      </form>
-      <li>
-
-      </li>
+      <ol>
+        {items.map(item => (
+          <li key={item.id}>{item.description}</li>
+        ))}
+      </ol>
     </div>
   );
 }
