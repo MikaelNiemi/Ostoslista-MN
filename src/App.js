@@ -89,14 +89,14 @@ function App() {
       <h1>Shopping list</h1>
       <div>
         <form onSubmit={save}>
-          <label>New Item</label>
-          <input value={item} onChange={e => setItem(e.target.value)}></input>
-          <input value={määrä} onChange={e => setMäärä(e.target.value)}></input>
+          <label>New Item</label>&nbsp;
+          <input value={item} onChange={e => setItem(e.target.value)}></input>&nbsp;
+          <input value={määrä} onChange={e => setMäärä(e.target.value)}></input>&nbsp;
           <button>Add</button>
         </form>
       </div>
         {items.map(item => (
-          <li key={item.id}>{item.description}{item.amount}<a className="delete" onClick={() => remove(item.id)} href="#">Delete</a></li>
+          <li key={item.id}>{item.description}&nbsp;{item.amount}&nbsp;<a className="delete" onClick={() => remove(item.id)} href="#">Delete</a></li>
         ))}
     </div>
   );
