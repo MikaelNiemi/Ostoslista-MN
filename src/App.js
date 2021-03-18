@@ -6,6 +6,8 @@ const URL ='http://localhost/ostoslista/'
 function App() {
   const [items,setItems] = useState([]);
   const [item,setItem] = useState('');
+  const [määrä,setMäärä] = useState([]);
+
 
   useEffect(() => {
     fetch(URL + 'index.php')
@@ -29,7 +31,8 @@ function App() {
         'Content-type': 'application/json',
       },
       body: JSON.stringify({
-        description: item
+        description: item,
+        amount: määrä
       })
     })
     .then(res => {
@@ -41,6 +44,7 @@ function App() {
         if (status === 200) {
           setItems(items => [...items, res]);
           setItem('');
+          setMäärä('');
         } else {
           alert(res.error);
         }
@@ -62,6 +66,10 @@ function App() {
         id: id
       })
     })
+    .then(res => {
+      status = parseInt(res.status);
+      return res.json();
+    })
     .then(
       (res) => {
         if (status === 200) {
@@ -77,18 +85,18 @@ function App() {
   }
 
   return (
-    <div className="container">
+    <div class="container">
       <h1>Shopping list</h1>
       <div>
         <form onSubmit={save}>
           <label>New Item</label>
           <input value={item} onChange={e => setItem(e.target.value)}></input>
-          <input></input>
+          <input value={määrä} onChange={e => setMäärä(e.target.value)}></input>
           <button>Add</button>
         </form>
       </div>
         {items.map(item => (
-          <li key={item.id}>{item.description}<a className="delete" onClick={() => remove(item.id)} href="*">Delete</a></li>
+          <li key={item.id}>{item.description}{item.amount}<a className="delete" onClick={() => remove(item.id)} href="#">Delete</a></li>
         ))}
     </div>
   );
